@@ -1,0 +1,54 @@
+<section class="content">
+    <div class="container-fluid">
+        <div class="block-header">
+           
+        </div>
+        <!-- Basic Table -->
+        <div class="row clearfix">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                
+                <div class="card">
+                <br>
+                    <button type="button" class="btn btn-primary waves-effect col-md-offset-10  "> <i class="material-icons">add</i></button>
+                     
+                    <div class="header">
+                        <h2>
+                            Employee Table
+                            <small>This is the demo for employee management </small>
+                        </h2>
+                    </div>
+                    
+
+                    <div class="body table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>FIRST NAME</th>
+                                    <th>LAST NAME</th>
+                                    <th>Person Id</th>
+                                    <th>Address</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                 <tr *ngFor="let employee of employeeList let i = index"  [attr.data-index]="employee.employeeId" (click)="viewEmployee(employee)">
+                                    <th scope="row">{{i+1}}</th>
+                                    <td>{{employee.firstName}}</td>
+                                    <td>{{employee.lastName}}</td>
+                                    <td>{{employee.employeeId}}</td>
+                                    <td><a href="javascript:void(0);" class="btn bg-blue waves-effect waves-light  ">View</a></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- #END# Basic Table -->
+    </div>
+</section>
+
+
+ 
+    <app-addEmployee *ngIf="employeeSelected !=null" [employeeInfo]="employeeSelected"></app-addEmployee>
+ 
