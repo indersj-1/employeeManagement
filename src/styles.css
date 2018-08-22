@@ -7,3 +7,13 @@
 @import './assets/plugins/css/waves.css';
 
 
+input{
+  border-color: red;
+}
+
+.form-control {
+  color: #495057;
+  background-color: #fff;
+  border-color: #80bdff;
+  outline: none;
+}
