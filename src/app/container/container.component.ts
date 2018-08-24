@@ -15,23 +15,29 @@ export class ContainerComponent implements OnInit {
   form: FormGroup;
   query;
   shareIcon: boolean = false;
+  LicenseKey;
 
   constructor(private formBuilder: FormBuilder, private lincenseService: LicenseService) { }
 
   ngOnInit() {
+   
     this.form = this.formBuilder.group({
-      customerId: [null, Validators.compose([Validators.required, Validators.maxLength(6)])],
-      customerReview: [null, Validators.compose([Validators.required, Validators.maxLength(7)])],
-      totalBalance: [null, Validators.compose([Validators.required, Validators.maxLength(6)])],
-      lastPayAmount: [null, Validators.compose([Validators.required, Validators.maxLength(6)])],
-      licensePeriod: [null, Validators.compose([Validators.required, Validators.maxLength(6)])],
-      lastPayDate: [null, Validators.compose([Validators.required])],
-      licenseGenerateDate: [null, Validators.compose([Validators.required])],
-      licenseKey: [null, Validators.compose([Validators.required, Validators.maxLength(2)])],
-      isBlocked: [null],
-      
+      CustomerId: [null, Validators.compose([Validators.required, Validators.maxLength(6)])],
+      CustomerReview: [null, Validators.compose([Validators.required, Validators.maxLength(7)])],
+      TotalBalance: [null, Validators.compose([Validators.required, Validators.maxLength(6)])],
+      LastPayAmount: [null, Validators.compose([Validators.required, Validators.maxLength(6)])],
+      LicensePeriod: [null, Validators.compose([Validators.required, Validators.maxLength(6)])],
+      LastPayDate: [null, Validators.compose([Validators.required])],
+      LicenseGenerationDate: [null, Validators.compose([Validators.required])],
+      Block: [null],
+      LicenseKey: [null],
     });
+
+   
+
   }
+
+ 
 
   isFieldValid(field: string) {
     return !this.form.get(field).valid && this.form.get(field).touched;
@@ -40,19 +46,39 @@ export class ContainerComponent implements OnInit {
 
 
   onSubmit() {
-
     console.log(this.form);
     if (this.form.valid) {
+      delete this.form.value.LicenseKey
       console.log('form submitted');
+ 
+      this.LicenseKey  = "ZZIIMR-ZLFIMT-ZLQVFP-ZZZZPB-IIPSLG-6PAS6K-ZZIIM3" // remove this.
+
       this
         .lincenseService
-        .getLicense(this.form.value)
-        .subscribe((res) => {
+        .postLicense(this.form.value)
+        .subscribe((res:any) => {
           console.log(res)
+          this.LicenseKey = res.license; //need to check the value and change as per response.
+          this.reset();
         });
     } else {
       this.validateAllFormFields(this.form);
     }
+
+  }
+
+  onDecode() {
+ 
+   
+ 
+      this
+        .lincenseService
+        .getLicense(this.LicenseKey)
+        .subscribe((res:any) => {
+          console.log(res)
+         alert(res)
+        });
+     
 
   }
 
