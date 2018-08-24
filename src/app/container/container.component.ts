@@ -14,17 +14,22 @@ import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms'
 export class ContainerComponent implements OnInit {
   form: FormGroup;
   query;
+  shareIcon: boolean = false;
 
   constructor(private formBuilder: FormBuilder, private lincenseService: LicenseService) { }
 
   ngOnInit() {
     this.form = this.formBuilder.group({
-      customer: [null, Validators.compose([Validators.required, Validators.maxLength(6)])],
-      amount: [null, Validators.compose([Validators.required, Validators.maxLength(7)])],
-      date1: [null, Validators.compose([Validators.required, Validators.maxLength(6)])],
-      date2: [null, Validators.compose([Validators.required, Validators.maxLength(6)])],
-      date3: [null, Validators.compose([Validators.required, Validators.maxLength(6)])],
-      rating: [null, Validators.compose([Validators.required, Validators.maxLength(2)])],
+      customerId: [null, Validators.compose([Validators.required, Validators.maxLength(6)])],
+      customerReview: [null, Validators.compose([Validators.required, Validators.maxLength(7)])],
+      totalBalance: [null, Validators.compose([Validators.required, Validators.maxLength(6)])],
+      lastPayAmount: [null, Validators.compose([Validators.required, Validators.maxLength(6)])],
+      licensePeriod: [null, Validators.compose([Validators.required, Validators.maxLength(6)])],
+      lastPayDate: [null, Validators.compose([Validators.required])],
+      licenseGenerateDate: [null, Validators.compose([Validators.required])],
+      licenseKey: [null, Validators.compose([Validators.required, Validators.maxLength(2)])],
+      isBlocked: [null],
+      
     });
   }
 
@@ -66,5 +71,9 @@ export class ContainerComponent implements OnInit {
   reset() {
     this.form.reset();
   }
+
+  toggleShareIcon(){
+    this.shareIcon = !this.shareIcon;       
+}
 
 }
