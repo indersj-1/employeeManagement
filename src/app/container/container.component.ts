@@ -16,11 +16,12 @@ export class ContainerComponent implements OnInit {
   query;
   shareIcon: boolean = false;
   LicenseKey;
+  licenseData: any = {};
 
   constructor(private formBuilder: FormBuilder, private lincenseService: LicenseService) { }
 
   ngOnInit() {
-   
+
     this.form = this.formBuilder.group({
       CustomerId: [null, Validators.compose([Validators.required, Validators.maxLength(6)])],
       CustomerReview: [null, Validators.compose([Validators.required, Validators.maxLength(7)])],
@@ -33,11 +34,11 @@ export class ContainerComponent implements OnInit {
       LicenseKey: [null],
     });
 
-   
+
 
   }
 
- 
+
 
   isFieldValid(field: string) {
     return !this.form.get(field).valid && this.form.get(field).touched;
@@ -47,16 +48,17 @@ export class ContainerComponent implements OnInit {
 
   onSubmit() {
     console.log(this.form);
+    this.licenseData.LicenseKey = "ZZIIMR-ZLFIMT-ZLQVFP-ZZZZPB-IIPSLG-6PAS6K-ZZIIM3" // remove this.
     if (this.form.valid) {
       delete this.form.value.LicenseKey
       console.log('form submitted');
- 
-      this.LicenseKey  = "ZZIIMR-ZLFIMT-ZLQVFP-ZZZZPB-IIPSLG-6PAS6K-ZZIIM3" // remove this.
+
+      
 
       this
         .lincenseService
         .postLicense(this.form.value)
-        .subscribe((res:any) => {
+        .subscribe((res: any) => {
           console.log(res)
           this.LicenseKey = res.license; //need to check the value and change as per response.
           this.reset();
@@ -68,17 +70,29 @@ export class ContainerComponent implements OnInit {
   }
 
   onDecode() {
- 
-   
- 
-      this
-        .lincenseService
-        .getLicense(this.LicenseKey)
-        .subscribe((res:any) => {
-          console.log(res)
-         alert(res)
-        });
-     
+    // this.licenseData = {
+    //   CustomerId: "1",
+    //   CustomerReview: "2",
+    //   TotalBalance: "3",
+    //   LastPayAmount: "4",
+    //   LicensePeriod: "123",
+    //   LastPayDate: "0111-02-11",
+    //   LicenseGenerationDate: "0111-02-11",
+    //   Block: false,
+    //   LicenseKey: "123132"
+
+    // }
+
+
+    this
+      .lincenseService
+      .getLicense(this.LicenseKey)
+      .subscribe((res: any) => {
+        console.log(res)
+        this.licenseData =  res
+        alert(res)
+      });
+
 
   }
 
@@ -98,8 +112,8 @@ export class ContainerComponent implements OnInit {
     this.form.reset();
   }
 
-  toggleShareIcon(){
-    this.shareIcon = !this.shareIcon;       
-}
+  toggleShareIcon() {
+    this.shareIcon = !this.shareIcon;
+  }
 
 }
